@@ -2,20 +2,23 @@
 
 ## Summary
 
-A basic web application that generates a simple captcha and allows the user to input the captcha text to verify if it matches.
+A simple web application that generates an SVG captcha and allows users to attempt to solve it.
 
 ## Setup
 
-1.  Clone this repository.
-2.  Open `index.html` in your browser.
+1.  Create an `index.html` file.
+2.  Create a `style.css` file for styling (optional).
+3.  Create a `main.js` file for the application logic.
+4.  Copy the code provided into the respective files.
 
 ## Usage
 
-1.  The application will generate a captcha image.
-2.  Enter the captcha text in the input field.
-3.  Click the "Submit" button.
-4.  The application will display whether the entered captcha matched or not.
+1.  Open `index.html` in a web browser.
+2.  A captcha image will be displayed.
+3.  Enter the captcha text into the input field.
+4.  Click the "Submit" button to check if the captcha is correct.
+5.  The result will be displayed below the button.
 
 ## License
 
-MIT
+MIT License
