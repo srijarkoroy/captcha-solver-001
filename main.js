@@ -1,31 +1,42 @@
-const captchaEl = document.getElementById('captcha');
-const captchaInputEl = document.getElementById('captchaInput');
-const submitBtnEl = document.getElementById('submitBtn');
-const resultEl = document.getElementById('result');
+document.addEventListener('DOMContentLoaded', function() {
+    const captchaElement = document.getElementById('captcha');
+    const captchaInput = document.getElementById('captchaInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const resultElement = document.getElementById('result');
 
-let captchaText = '';
+    let captchaText = generateCaptcha();
+    captchaElement.innerHTML = createSvgCaptcha(captchaText);
 
-function generateCaptcha() {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    captchaText = '';
-    for (let i = 0; i < 6; i++) {
-        captchaText += characters.charAt(Math.floor(Math.random() * characters.length));
+    submitBtn.addEventListener('click', function() {
+        if (captchaInput.value === captchaText) {
+            resultElement.textContent = 'Captcha Matched!';
+        } else {
+            resultElement.textContent = 'Captcha Not Matched.';
+        }
+
+        captchaText = generateCaptcha();
+        captchaElement.innerHTML = createSvgCaptcha(captchaText);
+        captchaInput.value = '';
+    });
+
+    function generateCaptcha() {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let captcha = '';
+        for (let i = 0; i < 6; i++) {
+            captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        return captcha;
     }
-    captchaEl.textContent = captchaText;
-}
 
-function checkCaptcha() {
-    if (captchaInputEl.value === captchaText) {
-        resultEl.textContent = 'Captcha Matched!';
-        resultEl.style.color = 'green';
-    } else {
-        resultEl.textContent = 'Captcha Not Matched!';
-        resultEl.style.color = 'red';
+    function createSvgCaptcha(text) {
+        const svgWidth = 200;
+        const svgHeight = 50;
+        const textX = 10;
+        const textY = 35;
+
+        let svg = `<svg width="${svgWidth}" height="${svgHeight}">`;
+        svg += `<text x="${textX}" y="${textY}" font-size="24" fill="black">${text}</text>`;
+        svg += `</svg>`;
+        return svg;
     }
-    generateCaptcha();
-    captchaInputEl.value = '';
-}
-
-submitBtnEl.addEventListener('click', checkCaptcha);
-
-generateCaptcha();
+});
