@@ -1,27 +1,33 @@
+.container {
+    width: 300px;
+    margin: 50px auto;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
 #captcha {
-  text-align: center;
-  margin-top: 50px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    letter-spacing: 5px;
 }
 
-#captchaText {
-  font-size: 2em;
-  font-weight: bold;
-  margin-bottom: 10px;
-  display: block;
+input[type="text"] {
+    padding: 8px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-#captchaInput {
-  padding: 5px;
-  font-size: 1em;
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
-#submitButton {
-  padding: 5px 10px;
-  font-size: 1em;
-  cursor: pointer;
-}
-
-#result {
-  margin-top: 10px;
-  font-weight: bold;
+button:hover {
+    background-color: #3e8e41;
 }
