@@ -1,42 +1,47 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const captchaElement = document.getElementById('captcha');
-    const captchaInput = document.getElementById('captchaInput');
-    const submitBtn = document.getElementById('submitBtn');
-    const resultElement = document.getElementById('result');
+// main.js
 
-    let captchaText = generateCaptcha();
-    captchaElement.innerHTML = createSvgCaptcha(captchaText);
+const captchaImage = document.getElementById('captcha-image');
+const captchaInput = document.getElementById('captcha-input');
+const verifyButton = document.getElementById('verify-button');
+const resultParagraph = document.getElementById('result');
 
-    submitBtn.addEventListener('click', function() {
-        if (captchaInput.value === captchaText) {
-            resultElement.textContent = 'Captcha Matched!';
-        } else {
-            resultElement.textContent = 'Captcha Not Matched.';
-        }
-
-        captchaText = generateCaptcha();
-        captchaElement.innerHTML = createSvgCaptcha(captchaText);
-        captchaInput.value = '';
-    });
-
-    function generateCaptcha() {
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let captcha = '';
-        for (let i = 0; i < 6; i++) {
-            captcha += characters.charAt(Math.floor(Math.random() * characters.length));
-        }
-        return captcha;
+// Simple captcha generation (replace with a more robust solution)
+function generateCaptcha() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let captcha = '';
+    for (let i = 0; i < 6; i++) {
+        captcha += characters.charAt(Math.floor(Math.random() * characters.length));
     }
+    return captcha;
+}
 
-    function createSvgCaptcha(text) {
-        const svgWidth = 200;
-        const svgHeight = 50;
-        const textX = 10;
-        const textY = 35;
+let generatedCaptcha = '';
 
-        let svg = `<svg width="${svgWidth}" height="${svgHeight}">`;
-        svg += `<text x="${textX}" y="${textY}" font-size="24" fill="black">${text}</text>`;
-        svg += `</svg>`;
-        return svg;
+function updateCaptchaImage() {
+    generatedCaptcha = generateCaptcha();
+    // For demonstration, we use a data URL; in a real app, fetch an image from a server.
+    const canvas = document.createElement('canvas');
+    canvas.width = 150;
+    canvas.height = 50;
+    const ctx = canvas.getContext('2d');
+    ctx.font = '30px Arial';
+    ctx.fillText(generatedCaptcha, 10, 40);
+    captchaImage.src = canvas.toDataURL();
+}
+
+updateCaptchaImage();
+
+verifyButton.addEventListener('click', () => {
+    const userInput = captchaInput.value;
+    if (userInput === generatedCaptcha) {
+        resultParagraph.textContent = 'Captcha verified!';
+        resultParagraph.style.color = 'green';
+        updateCaptchaImage(); // Generate a new captcha after successful verification
+        captchaInput.value = '';
+    } else {
+        resultParagraph.textContent = 'Captcha verification failed.';
+        resultParagraph.style.color = 'red';
+        updateCaptchaImage(); // Generate a new captcha after failed verification
+        captchaInput.value = '';
     }
 });
