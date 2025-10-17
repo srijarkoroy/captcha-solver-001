@@ -1,60 +1,46 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const captchaImage = document.getElementById('captcha-image');
-  const captchaInput = document.getElementById('captcha-input');
-  const captchaButton = document.getElementById('captcha-button');
-  const captchaResult = document.getElementById('captcha-result');
+document.addEventListener('DOMContentLoaded', function() {
+    const captchaImage = document.getElementById('captchaImage');
+    const captchaInput = document.getElementById('captchaInput');
+    const verifyButton = document.getElementById('verifyButton');
+    const result = document.getElementById('result');
 
-  let captchaText = generateCaptcha();
-  captchaImage.src = `data:image/svg+xml;base64,${btoa(generateSvgCaptcha(captchaText))}`;
+    // Mock captcha image (replace with actual captcha generation/retrieval)
+    const captchaText = generateCaptcha();
+    captchaImage.src = generateCaptchaImage(captchaText);
 
-  captchaButton.addEventListener('click', () => {
-    if (captchaInput.value === captchaText) {
-      captchaResult.textContent = 'Captcha Verified!';
-      captchaResult.style.color = 'green';
-      captchaText = generateCaptcha();
-      captchaImage.src = `data:image/svg+xml;base64,${btoa(generateSvgCaptcha(captchaText))}`;
-      captchaInput.value = '';
-    } else {
-      captchaResult.textContent = 'Captcha Failed. Try again.';
-      captchaResult.style.color = 'red';
-    }
-  });
+    verifyButton.addEventListener('click', function() {
+        if (captchaInput.value === captchaText) {
+            result.textContent = 'Captcha verified!';
+            result.style.color = 'green';
+        } else {
+            result.textContent = 'Captcha incorrect. Try again.';
+            result.style.color = 'red';
+            // Regenerate captcha for next attempt
+            const newCaptchaText = generateCaptcha();
+            captchaImage.src = generateCaptchaImage(newCaptchaText);
+            captchaInput.value = '';
+        }
+    });
 
-  function generateCaptcha() {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let captcha = '';
-    for (let i = 0; i < 6; i++) {
-      captcha += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return captcha;
-  }
-
-  function generateSvgCaptcha(text) {
-    const width = 200;
-    const height = 50;
-    const fontSize = 30;
-
-    let svg = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">`;
-    svg += `<rect width="${width}" height="${height}" fill="#f0f0f0" />`;
-    
-    for (let i = 0; i < text.length; i++) {
-        const x = (width / text.length) * i + 10;
-        const y = height / 2 + fontSize / 3;
-        const rotate = (Math.random() - 0.5) * 30; // Random rotation
-        const color = `hsl(${Math.random() * 360}, 70%, 30%)`; // Random color
-        svg += `<text x="${x}" y="${y}" font-size="${fontSize}" fill="${color}" transform="rotate(${rotate} ${x} ${y})">${text[i]}</text>`;
+    // Helper functions for captcha generation (replace with real implementation)
+    function generateCaptcha() {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let captcha = '';
+        for (let i = 0; i < 6; i++) {
+            captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        return captcha;
     }
 
-    // Add noise lines
-    for (let i = 0; i < 5; i++) {
-        const x1 = Math.random() * width;
-        const y1 = Math.random() * height;
-        const x2 = Math.random() * width;
-        const y2 = Math.random() * height;
-        svg += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(0,0,0,0.2)" stroke-width="2" />`;
+    function generateCaptchaImage(text) {
+        // In a real application, this would generate an actual image.
+        // Here, we return a simple text-based representation.
+        const canvas = document.createElement('canvas');
+        canvas.width = 150;
+        canvas.height = 50;
+        const ctx = canvas.getContext('2d');
+        ctx.font = '24px Arial';
+        ctx.fillText(text, 20, 35);
+        return canvas.toDataURL(); // Converts canvas to a data URL representing the image
     }
-
-    svg += `</svg>`;
-    return svg;
-  }
 });
