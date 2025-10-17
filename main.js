@@ -1,11 +1,3 @@
-// main.js
-
-const captchaImage = document.getElementById('captcha-image');
-const captchaInput = document.getElementById('captcha-input');
-const verifyButton = document.getElementById('verify-button');
-const resultParagraph = document.getElementById('result');
-
-// Simple captcha generation (replace with a more robust solution)
 function generateCaptcha() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let captcha = '';
@@ -15,33 +7,35 @@ function generateCaptcha() {
     return captcha;
 }
 
-let generatedCaptcha = '';
-
-function updateCaptchaImage() {
-    generatedCaptcha = generateCaptcha();
-    // For demonstration, we use a data URL; in a real app, fetch an image from a server.
-    const canvas = document.createElement('canvas');
-    canvas.width = 150;
-    canvas.height = 50;
-    const ctx = canvas.getContext('2d');
-    ctx.font = '30px Arial';
-    ctx.fillText(generatedCaptcha, 10, 40);
-    captchaImage.src = canvas.toDataURL();
+function drawCaptcha(captcha) {
+    const svg = document.getElementById('captcha-svg');
+    svg.innerHTML = ''; // Clear previous captcha
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    text.setAttribute('x', '10');
+    text.setAttribute('y', '50');
+    text.setAttribute('font-size', '30');
+    text.textContent = captcha;
+    svg.appendChild(text);
 }
 
-updateCaptchaImage();
+let captchaText = generateCaptcha();
+drawCaptcha(captchaText);
 
-verifyButton.addEventListener('click', () => {
-    const userInput = captchaInput.value;
-    if (userInput === generatedCaptcha) {
-        resultParagraph.textContent = 'Captcha verified!';
-        resultParagraph.style.color = 'green';
-        updateCaptchaImage(); // Generate a new captcha after successful verification
-        captchaInput.value = '';
+document.getElementById('captcha-submit').addEventListener('click', function() {
+    const userInput = document.getElementById('captcha-input').value;
+    const resultElement = document.getElementById('captcha-result');
+
+    if (userInput === captchaText) {
+        resultElement.textContent = 'Captcha correct!';
+        resultElement.style.color = 'green';
+        captchaText = generateCaptcha();
+        drawCaptcha(captchaText);
+        document.getElementById('captcha-input').value = ''; // Clear input
     } else {
-        resultParagraph.textContent = 'Captcha verification failed.';
-        resultParagraph.style.color = 'red';
-        updateCaptchaImage(); // Generate a new captcha after failed verification
-        captchaInput.value = '';
+        resultElement.textContent = 'Captcha incorrect. Please try again.';
+        resultElement.style.color = 'red';
+        captchaText = generateCaptcha();
+        drawCaptcha(captchaText);
+        document.getElementById('captcha-input').value = ''; // Clear input
     }
 });
