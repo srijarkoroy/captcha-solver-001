@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Captcha Solver</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Captcha Solver</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="captcha">
-    <img id="captcha-image" src="" alt="Captcha Image">
-    <input type="text" id="captcha-input" placeholder="Enter Captcha">
-    <button id="captcha-button">Verify</button>
-    <p id="captcha-result"></p>
-  </div>
-  <script src="main.js"></script>
+    <div class="container">
+        <h1>Captcha Solver</h1>
+        <img id="captchaImage" src="" alt="Captcha Image">
+        <input type="text" id="captchaInput" placeholder="Enter captcha">
+        <button id="verifyButton">Verify</button>
+        <p id="result"></p>
+    </div>
+    <script src="main.js"></script>
 </body>
 </html>
