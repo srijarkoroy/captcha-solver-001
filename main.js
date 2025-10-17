@@ -1,37 +1,53 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const captchaElement = document.getElementById('captcha');
-    const captchaInput = document.getElementById('captchaInput');
-    const submitButton = document.getElementById('submitButton');
-    const resultElement = document.getElementById('result');
+    const captchaSvg = document.getElementById('captcha-svg');
+    const captchaInput = document.getElementById('captcha-input');
+    const captchaSubmit = document.getElementById('captcha-submit');
+    const captchaResult = document.getElementById('captcha-result');
 
     let captchaText = generateCaptcha();
 
     function generateCaptcha() {
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const chars = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ23456789';
         let captcha = '';
         for (let i = 0; i < 6; i++) {
-            captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+            captcha += chars.charAt(Math.floor(Math.random() * chars.length));
         }
+
+        // Clear existing SVG content
+        captchaSvg.innerHTML = '';
+
+        // Add the captcha text as SVG text elements with distortions
+        for (let i = 0; i < captcha.length; i++) {
+            const char = captcha[i];
+            const x = 20 + i * 25;
+            const y = 60;
+            const rotation = Math.random() * 20 - 10; // Small rotation
+
+            const textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            textElement.setAttribute('x', x);
+            textElement.setAttribute('y', y);
+            textElement.setAttribute('transform', `rotate(${rotation} ${x} ${y})`);
+            textElement.setAttribute('font-size', '24');
+            textElement.setAttribute('fill', 'black');
+            textElement.textContent = char;
+
+            captchaSvg.appendChild(textElement);
+        }
+
         return captcha;
     }
 
-    function displayCaptcha() {
-        captchaElement.textContent = captchaText;
-    }
-
-    displayCaptcha();
-
-    submitButton.addEventListener('click', function() {
-        if (captchaInput.value === captchaText) {
-            resultElement.textContent = 'Captcha Correct!';
-            resultElement.style.color = 'green';
-            captchaText = generateCaptcha();
-            displayCaptcha();
-            captchaInput.value = '';
+    captchaSubmit.addEventListener('click', function() {
+        const userInput = captchaInput.value;
+        if (userInput === captchaText) {
+            captchaResult.textContent = 'Captcha Correct!';
+            captchaResult.style.color = 'green';
+            captchaText = generateCaptcha(); // Generate a new captcha after success
+            captchaInput.value = ''; // Clear input
         } else {
-            resultElement.textContent = 'Captcha Incorrect. Try again.';
-            resultElement.style.color = 'red';
-            captchaInput.value = '';
+            captchaResult.textContent = 'Captcha Incorrect. Try again.';
+            captchaResult.style.color = 'red';
+            captchaInput.value = ''; // Clear input
         }
     });
 });
