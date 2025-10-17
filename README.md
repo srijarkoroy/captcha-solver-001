@@ -1,23 +1,25 @@
-# Captcha Solver
+# Simple Captcha Solver
 
-A simple captcha solver web application.
+A basic captcha solver web application.
 
 ## Summary
 
-This web app generates a captcha image and prompts the user to enter the text displayed in the image.  It then validates the user's input against the generated text.
+This is a minimal implementation of a captcha solver. It displays a captcha image, takes user input, and verifies if the input matches the captcha.  The captcha image generation is a placeholder and should be replaced with a real implementation.
 
 ## Setup
 
-1.  Save the `index.html`, `main.js`, and `style.css` files in the same directory.
-2.  Open `index.html` in your web browser.
+1.  Create a new directory for the project.
+2.  Create the following files: `index.html`, `style.css`, and `main.js`.
+3.  Copy the contents of each file from the provided code into the respective files.
 
 ## Usage
 
-1.  The app displays a captcha image.
-2.  Enter the text displayed in the image into the text field.
-3.  Click the "Verify" button.
-4.  The app will display whether the captcha was successfully verified or not.
+1.  Open `index.html` in a web browser.
+2.  A captcha image will be displayed.
+3.  Enter the text from the captcha image into the input field.
+4.  Click the "Verify" button.
+5.  The result will be displayed below the button.
 
 ## License
 
-MIT
+MIT License
