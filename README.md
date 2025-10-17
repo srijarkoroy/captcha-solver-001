@@ -1,22 +1,23 @@
-# SVG Captcha Solver
-
-A minimal web application that generates and validates captchas using SVG.
+# Simple Captcha Solver
 
 ## Summary
 
-This project provides a simple captcha solver implemented with HTML, CSS, and JavaScript. The captcha is rendered using SVG, adding a layer of complexity to prevent bot access.
+A basic web application that displays a captcha image and allows the user to input the corresponding text. It then verifies the input against the actual captcha text.
 
 ## Setup
 
-1.  Clone this repository.
-2.  Open `index.html` in your web browser.
+1.  Save the contents of `index.html`, `main.js`, and `style.css` into their respective files.
+2.  Ensure all files are in the same directory.
 
 ## Usage
 
-1.  The application displays an SVG captcha.
-2.  Enter the characters from the image into the input field.
-3.  Click the "Submit" button.
-4.  The application will display whether the captcha was entered correctly.
+1.  Open `index.html` in a web browser.
+2.  A captcha image will be displayed.
+3.  Enter the text displayed in the captcha image into the input field.
+4.  Click the "Submit" button.
+5.  A message will appear indicating whether the captcha was matched or mismatched.
+
+**Note:** This is a simplified example. In a real-world application, captcha images and text should be generated server-side to prevent bots from easily bypassing the system.
 
 ## License
 
