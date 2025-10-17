@@ -3,18 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Captcha Solver</title>
+    <title>SVG Captcha Solver</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Captcha Solver</h1>
-        <div id="captcha">
-            <!-- Captcha image will be dynamically added here -->
-        </div>
-        <input type="text" id="captchaInput" placeholder="Enter Captcha">
-        <button id="submitButton">Submit</button>
-        <p id="result"></p>
+    <div id="captcha-container">
+        <svg id="captcha-svg" width="200" height="100"></svg>
+        <input type="text" id="captcha-input" placeholder="Enter Captcha">
+        <button id="captcha-submit">Submit</button>
+        <p id="captcha-result"></p>
     </div>
     <script src="main.js"></script>
 </body>
