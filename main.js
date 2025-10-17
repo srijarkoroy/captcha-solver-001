@@ -1,53 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const captchaSvg = document.getElementById('captcha-svg');
+    const captchaImage = document.getElementById('captcha-image');
     const captchaInput = document.getElementById('captcha-input');
     const captchaSubmit = document.getElementById('captcha-submit');
     const captchaResult = document.getElementById('captcha-result');
 
-    let captchaText = generateCaptcha();
+    // Simple captcha data (replace with server-side generation in real application)
+    const captchaData = {
+        image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAIAAAB+DGcgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADnSURBVGhD7dExAQAgEASC/nv0RNgKcjKyKxWq1Wo1GIVqtVqNRiEq1Wo1Go1CIVqtVqNRiEq1Wo1Go1CIVqtVqNRiEq1Wo1Go1CIVqtVqNRiEq1Wo1Go1CIVqtVqNRiEq1Wo1Go1CIVqtVqNRiEq1Wo1Go1CIVqtVqNRiEq1Wo1Go1CIVqtVqNRiEq1Wo1Go1CIVqtVqNRiEq1Wo1Go1CIVqtVqNRiEq1Wo1Go1CIVqtVqNRiEq1Wo1Go1CIVqtVqNRiEq1Wo1Go1CIVqtVqNRiEq1Wo1Go1CIVqtVqNRiEq1Wo1Go1CIVqtVqNRiEq1Wo1Go1CIULgAYJ0v8rAAAAAElFTkSuQmCC',
+        text: 'ABCD'
+    };
 
-    function generateCaptcha() {
-        const chars = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ23456789';
-        let captcha = '';
-        for (let i = 0; i < 6; i++) {
-            captcha += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-
-        // Clear existing SVG content
-        captchaSvg.innerHTML = '';
-
-        // Add the captcha text as SVG text elements with distortions
-        for (let i = 0; i < captcha.length; i++) {
-            const char = captcha[i];
-            const x = 20 + i * 25;
-            const y = 60;
-            const rotation = Math.random() * 20 - 10; // Small rotation
-
-            const textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-            textElement.setAttribute('x', x);
-            textElement.setAttribute('y', y);
-            textElement.setAttribute('transform', `rotate(${rotation} ${x} ${y})`);
-            textElement.setAttribute('font-size', '24');
-            textElement.setAttribute('fill', 'black');
-            textElement.textContent = char;
-
-            captchaSvg.appendChild(textElement);
-        }
-
-        return captcha;
-    }
+    captchaImage.src = captchaData.image;
 
     captchaSubmit.addEventListener('click', function() {
-        const userInput = captchaInput.value;
-        if (userInput === captchaText) {
-            captchaResult.textContent = 'Captcha Correct!';
+        if (captchaInput.value.toUpperCase() === captchaData.text) {
+            captchaResult.textContent = 'Captcha Matched!';
             captchaResult.style.color = 'green';
-            captchaText = generateCaptcha(); // Generate a new captcha after success
-            captchaInput.value = ''; // Clear input
         } else {
-            captchaResult.textContent = 'Captcha Incorrect. Try again.';
+            captchaResult.textContent = 'Captcha Mismatch!';
             captchaResult.style.color = 'red';
-            captchaInput.value = ''; // Clear input
         }
     });
 });
