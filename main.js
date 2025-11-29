@@ -1,15 +1,32 @@
-document.getElementById('submitButton').addEventListener('click', function() {
-    const userInput = document.getElementById('captchaInput').value;
-    const captchaImageSrc = document.getElementById('captchaImage').src; //Unused but keeps structure
+document.addEventListener('DOMContentLoaded', function() {
+    const submitButton = document.getElementById('submit-button');
+    const captchaInput = document.getElementById('captcha-input');
+    const resultParagraph = document.getElementById('result');
+    const captchaImage = document.getElementById('captcha-image');
 
-    // Replace with actual captcha solving logic (e.g., API call)
-    // This is a placeholder for demonstration purposes
-    let solved = false;
-    if (userInput === "ABCD") {
-        solved = true;
+    // Basic captcha generation (replace with actual logic later)
+    function generateCaptcha() {
+        // This is a placeholder. Replace with real image generation
+        // For now, it keeps the placeholder image.
+        return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w+Y0AQEHBkYGBgYAAAAwAw0CkxW7zgAAAABJRU5ErkJggg==";
     }
 
-    let message = solved ? 'Captcha Solved!' : 'Incorrect Captcha. Try again.';
+    function checkCaptcha(userInput) {
+        // Basic captcha validation (replace with actual validation later)
+        //This is a placeholder. replace with real validation
+        return userInput === "";
+    }
 
-    document.getElementById('result').textContent = message;
+    submitButton.addEventListener('click', function() {
+        const userInput = captchaInput.value;
+
+        if (checkCaptcha(userInput)) {
+            resultParagraph.textContent = 'Correct!';
+            // Optionally, regenerate the captcha
+            captchaImage.src = generateCaptcha();
+            captchaInput.value = '';
+        } else {
+            resultParagraph.textContent = 'Incorrect. Please try again.';
+        }
+    });
 });
